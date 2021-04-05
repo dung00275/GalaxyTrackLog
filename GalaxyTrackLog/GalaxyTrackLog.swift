@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - App Info
 final class AppConfigure: Codable {
     let appName:  String
     let appBundle: String
@@ -15,8 +16,8 @@ final class AppConfigure: Codable {
     lazy var deviceID = UIDevice.current.identifierForVendor?.uuidString
     let platform = "IOS"
     let deviceModel = UIDevice.current.model
+    private let type = UIDevice.current.userInterfaceIdiom
     lazy var deviceType: String = {
-        let type = UIDevice.current.userInterfaceIdiom
         switch type {
         case .pad:
             return "tablet"
@@ -29,6 +30,19 @@ final class AppConfigure: Codable {
     let versionCode = UIDevice.current.systemVersion
     let iOSSDK =  UIDevice.current.systemName
     let language = Locale.current.identifier
+    lazy var screenDensity: CGFloat = {
+        let scale = UIScreen.main.scale
+        let dpi: CGFloat
+        switch type {
+        case .pad:
+            dpi = 132 * scale
+        case .phone:
+            dpi = 163 * scale
+        default:
+            dpi = 160 * scale
+        }
+        return dpi
+    }()
     
     var params: [String: Any] {
         var params: [String: Any] = [:]
@@ -38,6 +52,8 @@ final class AppConfigure: Codable {
         params["DeviceModel"] = deviceModel
         params["DeviceType"] = deviceType
         params["VersionApp"] = appVersion
+        params["VersionOS"] = "\(iOSSDK) \(versionCode)"
+        params["DeviceDensity"] = "\(screenDensity) dpi"
         return params
     }
     
@@ -49,6 +65,7 @@ final class AppConfigure: Codable {
     }
 }
 
+// MARK: - Utils
 extension Dictionary {
     static func +=(lhs: inout Self, rhs: Self) {
         rhs.forEach { (item) in
@@ -72,11 +89,16 @@ extension Date {
     }
 }
 
+// MARK: - Main
 @objcMembers
 public final class GalaxyTrackLog: NSObject {
     public static let shared = GalaxyTrackLog()
     
-    private var session: URLSession?
+    private lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.background(withIdentifier: "com.galaxy.tracklog")
+        configuration.allowsCellularAccess = true
+        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+    }()
     private let app: AppConfigure
     
     /// Path api for up log
@@ -104,21 +126,18 @@ public final class GalaxyTrackLog: NSObject {
             let decoder = PropertyListDecoder()
             app = try decoder.decode(AppConfigure.self, from: data)
             super.init()
-            let configuration  = URLSessionConfiguration.background(withIdentifier: "com.galaxy.tracklog")
-            configuration.allowsCellularAccess =  true
-            session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         } catch {
             fatalError("Check : \(error.localizedDescription)!!!")
         }
     }
     
-    
     /// Send event
     /// - Parameter params: json object send to server
-    public func log(params: [String: Any]?) {
+    private func log(params: [String: Any]?) {
         queue.async { [unowned self] in
             let p = params
-            guard let sessionID = self.sessionID, let firebaseID = self.firebaseID else {
+            guard let sessionID = self.sessionID,
+                  let firebaseID = self.firebaseID else {
                 fatalError("Check sessionID, firebaseID !!!")
             }
             var params = self.app.params
@@ -136,16 +155,33 @@ public final class GalaxyTrackLog: NSObject {
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
                 request.httpBody = data
-                let task = session?.dataTask(with: request)
-                task?.resume()
+                let task = session.dataTask(with: request)
+                task.resume()
             } catch {
                 print(error.localizedDescription)
             }
         }
-        
+    }
+    
+    /// Send event
+    /// - Parameter params: json object send to server
+    public static func log(params: [String: Any]?) {
+        GalaxyTrackLog.shared.log(params: params)
+    }
+    
+    
+    /// Send Encodable object to server
+    /// - Parameter value: object
+    /// - Throws: error encode
+    public static func log<T: Encodable>(value: T) throws  {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(value)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        log(params: json)
     }
 }
 
+// MARK: - Delegate
 extension GalaxyTrackLog: URLSessionDataDelegate {
     public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
         guard let error = error else {
