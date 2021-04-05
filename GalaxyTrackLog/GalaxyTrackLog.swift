@@ -12,7 +12,7 @@ final class AppConfigure: Codable {
     let appBundle: String
     let appVersion: String
     let shortVersion: String
-    lazy var deviceID = UIDevice.current.identifierForVendor?.uuid
+    lazy var deviceID = UIDevice.current.identifierForVendor?.uuidString
     let platform = "IOS"
     let deviceModel = UIDevice.current.model
     lazy var deviceType: String = {
@@ -124,6 +124,10 @@ public final class GalaxyTrackLog: NSObject {
         params["FID"] = firebaseID
         params["UserID"] = userID
         params += p
+        guard JSONSerialization.isValidJSONObject(params) else {
+            return
+        }
+        
         do {
             let data = try JSONSerialization.data(withJSONObject: params, options: [])
             var request = URLRequest(url: url)
