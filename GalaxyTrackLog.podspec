@@ -6,7 +6,9 @@ Pod::Spec.new do |s|
   s.homepage      = "https://github.com/peteranny/"
   s.license       = "MIT"
   s.author        = "DungVu"
-  s.source        = "https://github.com/dung00275/GalaxyTrackLog.git"
+  s.source        = {
+    :git => "https://github.com/dung00275/GalaxyTrackLog.git"
+  }
   s.platform      = :ios, "10.0"
   s.source_files        = "GalaxyTrackLog/*.{h,m,swift}"
   s.public_header_files = "GalaxyTrackLog/*.h"
