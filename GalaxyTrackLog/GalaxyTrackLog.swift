@@ -8,17 +8,16 @@
 import UIKit
 
 // MARK: - App Info
-final class AppConfigure: Codable {
+struct AppConfigure: Codable {
     let appName:  String
     let appBundle: String
     let appVersion: String
     let shortVersion: String
-    lazy var deviceID = UIDevice.current.identifierForVendor?.uuidString
+    let deviceID = UIDevice.current.identifierForVendor?.uuidString
     let platform = "IOS"
     let deviceModel = UIDevice.current.model
-    private let type = UIDevice.current.userInterfaceIdiom
-    lazy var deviceType: String = {
-        switch type {
+    let deviceType: String = {
+        switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             return "tablet"
         case  .phone:
@@ -30,10 +29,10 @@ final class AppConfigure: Codable {
     let versionCode = UIDevice.current.systemVersion
     let iOSSDK =  UIDevice.current.systemName
     let language = Locale.current.identifier
-    lazy var screenDensity: CGFloat = {
+    let screenDensity: CGFloat = {
         let scale = UIScreen.main.scale
         let dpi: CGFloat
-        switch type {
+        switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             dpi = 132 * scale
         case .phone:
@@ -54,6 +53,8 @@ final class AppConfigure: Codable {
         params["VersionApp"] = appVersion
         params["VersionOS"] = "\(iOSSDK) \(versionCode)"
         params["DeviceDensity"] = "\(screenDensity) dpi"
+        params["Language"] = language
+        params["Country"] = Locale.current.regionCode
         return params
     }
     
