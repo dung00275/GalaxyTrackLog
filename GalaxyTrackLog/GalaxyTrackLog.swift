@@ -93,6 +93,8 @@ public final class GalaxyTrackLog: NSObject {
         return url
     }
     
+    private lazy var queue = DispatchQueue(label: "com.galaxy.excuteLog")
+    
     private override init() {
         do {
             guard let file = Bundle.main.url(forResource: "Info", withExtension: "plist") else {
@@ -114,34 +116,37 @@ public final class GalaxyTrackLog: NSObject {
     /// Send event
     /// - Parameter params: json object send to server
     public func log(params: [String: Any]?) {
-        let p = params
-        guard let sessionID = sessionID, let firebaseID = firebaseID else {
-            fatalError("Check sessionID, firebaseID !!!")
-        }
-        var params = app.params
-        params["EventTime"] = Date().string(format: "yyyy-MM-dd**hh:mm:ss.sTZD").replacingOccurrences(of: "**", with: "T")
-        params["SessionID"] = sessionID
-        params["FID"] = firebaseID
-        params["UserID"] = userID
-        params += p
-        guard JSONSerialization.isValidJSONObject(params) else {
-            return
+        queue.async { [unowned self] in
+            let p = params
+            guard let sessionID = self.sessionID, let firebaseID = self.firebaseID else {
+                fatalError("Check sessionID, firebaseID !!!")
+            }
+            var params = self.app.params
+            params["EventTime"] = Date().string(format: "yyyy-MM-dd**hh:mm:ss.sTZD").replacingOccurrences(of: "**", with: "T")
+            params["SessionID"] = sessionID
+            params["FID"] = firebaseID
+            params["UserID"] = self.userID
+            params += p
+            guard JSONSerialization.isValidJSONObject(params) else {
+                return
+            }
+            
+            do {
+                let data = try JSONSerialization.data(withJSONObject: params, options: [])
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.httpBody = data
+                let task = session?.dataTask(with: request)
+                task?.resume()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
         
-        do {
-            let data = try JSONSerialization.data(withJSONObject: params, options: [])
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.httpBody = data
-            let task = session?.dataTask(with: request)
-            task?.resume()
-        } catch {
-            print(error.localizedDescription)
-        }
     }
 }
 
-extension GalaxyTrackLog: URLSessionDelegate {
+extension GalaxyTrackLog: URLSessionDataDelegate {
     public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
         guard let error = error else {
             return
@@ -150,4 +155,9 @@ extension GalaxyTrackLog: URLSessionDelegate {
     }
     
     public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {}
+    
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        let res = String(data: data, encoding: .utf8)
+        print("Result: \(res ?? "")")
+    }
 }
