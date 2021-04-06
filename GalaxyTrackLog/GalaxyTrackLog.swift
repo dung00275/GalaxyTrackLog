@@ -154,6 +154,8 @@ public final class GalaxyTrackLog: NSObject {
             do {
                 let data = try JSONSerialization.data(withJSONObject: params, options: [])
                 var request = URLRequest(url: url)
+                request.addValue("application/json", forHTTPHeaderField: "Accept")
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.httpMethod = "POST"
                 request.httpBody = data
                 let task = session.dataTask(with: request)
