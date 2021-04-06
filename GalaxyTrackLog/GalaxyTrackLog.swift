@@ -29,6 +29,7 @@ struct AppConfigure: Codable {
     let versionCode = UIDevice.current.systemVersion
     let iOSSDK =  UIDevice.current.systemName
     let language = Locale.current.identifier
+    let scale = UIScreen.main.scale
     let screenDensity: CGFloat = {
         let scale = UIScreen.main.scale
         let dpi: CGFloat
@@ -50,9 +51,9 @@ struct AppConfigure: Codable {
         params["DeviceManufacturer"] = "APPLE"
         params["DeviceModel"] = deviceModel
         params["DeviceType"] = deviceType
-        params["VersionApp"] = appVersion
+        params["VersionApp"] = appBundle
         params["VersionOS"] = "\(iOSSDK) \(versionCode)"
-        params["DeviceDensity"] = "\(screenDensity) dpi"
+        params["DeviceDensity"] = "\(scale)"
         params["Language"] = language
         params["Country"] = Locale.current.regionCode
         return params
