@@ -99,6 +99,7 @@ public final class GalaxyTrackLog: NSObject {
     private lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.background(withIdentifier: "com.galaxy.tracklog")
         configuration.allowsCellularAccess = true
+        configuration.waitsForConnectivity = true
         return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
     private let app: AppConfigure
