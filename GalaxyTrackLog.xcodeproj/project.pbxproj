@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66C81DA6461099E89E5B42B8 /* Pods_GalaxyTrackLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5E2F598C2CE738805CDDA7E /* Pods_GalaxyTrackLog.framework */; };
 		CFAB89CA261B12AF00F4A6A9 /* GalaxyTrackLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAB89C0261B12AF00F4A6A9 /* GalaxyTrackLog.framework */; };
 		CFAB89CF261B12B000F4A6A9 /* GalaxyTrackLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAB89CE261B12B000F4A6A9 /* GalaxyTrackLogTests.swift */; };
 		CFAB89D1261B12B000F4A6A9 /* GalaxyTrackLog.h in Headers */ = {isa = PBXBuildFile; fileRef = CFAB89C3261B12AF00F4A6A9 /* GalaxyTrackLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +25,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E84A4C63ACCE379F2D6B3D4 /* Pods-GalaxyTrackLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTrackLog.debug.xcconfig"; path = "Target Support Files/Pods-GalaxyTrackLog/Pods-GalaxyTrackLog.debug.xcconfig"; sourceTree = "<group>"; };
+		AB0D3754326D501C9BC7BCB5 /* Pods-GalaxyTrackLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTrackLog.release.xcconfig"; path = "Target Support Files/Pods-GalaxyTrackLog/Pods-GalaxyTrackLog.release.xcconfig"; sourceTree = "<group>"; };
 		CFAB89C0261B12AF00F4A6A9 /* GalaxyTrackLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GalaxyTrackLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFAB89C3261B12AF00F4A6A9 /* GalaxyTrackLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GalaxyTrackLog.h; sourceTree = "<group>"; };
 		CFAB89C4261B12AF00F4A6A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -31,6 +34,7 @@
 		CFAB89CE261B12B000F4A6A9 /* GalaxyTrackLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyTrackLogTests.swift; sourceTree = "<group>"; };
 		CFAB89D0261B12B000F4A6A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFAB89DC261B12FE00F4A6A9 /* GalaxyTrackLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyTrackLog.swift; sourceTree = "<group>"; };
+		F5E2F598C2CE738805CDDA7E /* Pods_GalaxyTrackLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyTrackLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66C81DA6461099E89E5B42B8 /* Pods_GalaxyTrackLog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,12 +57,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		977EB644E3BC8E21611EA207 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4E84A4C63ACCE379F2D6B3D4 /* Pods-GalaxyTrackLog.debug.xcconfig */,
+				AB0D3754326D501C9BC7BCB5 /* Pods-GalaxyTrackLog.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		CFAB89B6261B12AF00F4A6A9 = {
 			isa = PBXGroup;
 			children = (
 				CFAB89C2261B12AF00F4A6A9 /* GalaxyTrackLog */,
 				CFAB89CD261B12B000F4A6A9 /* GalaxyTrackLogTests */,
 				CFAB89C1261B12AF00F4A6A9 /* Products */,
+				977EB644E3BC8E21611EA207 /* Pods */,
+				F49549CEA9B309FA99696F44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,6 +106,14 @@
 			path = GalaxyTrackLogTests;
 			sourceTree = "<group>";
 		};
+		F49549CEA9B309FA99696F44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5E2F598C2CE738805CDDA7E /* Pods_GalaxyTrackLog.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -107,6 +132,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CFAB89D4261B12B000F4A6A9 /* Build configuration list for PBXNativeTarget "GalaxyTrackLog" */;
 			buildPhases = (
+				BBC819B6DC9CCBBFC2DD5CE9 /* [CP] Check Pods Manifest.lock */,
 				CFAB89BB261B12AF00F4A6A9 /* Headers */,
 				CFAB89BC261B12AF00F4A6A9 /* Sources */,
 				CFAB89BD261B12AF00F4A6A9 /* Frameworks */,
@@ -192,6 +218,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BBC819B6DC9CCBBFC2DD5CE9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GalaxyTrackLog-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CFAB89BC261B12AF00F4A6A9 /* Sources */ = {
@@ -345,6 +396,7 @@
 		};
 		CFAB89D5261B12B000F4A6A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E84A4C63ACCE379F2D6B3D4 /* Pods-GalaxyTrackLog.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -371,6 +423,7 @@
 		};
 		CFAB89D6261B12B000F4A6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB0D3754326D501C9BC7BCB5 /* Pods-GalaxyTrackLog.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

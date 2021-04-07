@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 // MARK: - App Info
 struct AppConfigure: Codable {
@@ -107,7 +108,11 @@ public final class GalaxyTrackLog: NSObject {
     /// Path api for up log
     public var urlUpload: String?
     public var sessionID: String?
-    public var userID: String = "anonymous"
+    public var userID: String = "anonymous" {
+        didSet {
+            Analytics.setUserID(userID)
+        }
+    }
     
     /// firebase ID:  FID. ref: https://firebase.google.com/docs/projects/manage-installations
     public var firebaseID: String?
@@ -136,7 +141,7 @@ public final class GalaxyTrackLog: NSObject {
     
     /// Send event
     /// - Parameter params: json object send to server
-    private func log(params: [String: Any]?) {
+    private func logEvent(name: String, params: [String: Any]?) {
         queue.async { [unowned self] in
             let p = params
             guard let sessionID = self.sessionID,
@@ -151,6 +156,10 @@ public final class GalaxyTrackLog: NSObject {
             params += p
             guard JSONSerialization.isValidJSONObject(params) else {
                 return
+            }
+            
+            defer {
+                Analytics.logEvent(name, parameters: params)
             }
             
             do {
@@ -170,19 +179,19 @@ public final class GalaxyTrackLog: NSObject {
     
     /// Send event
     /// - Parameter params: json object send to server
-    public static func log(params: [String: Any]?) {
-        GalaxyTrackLog.shared.log(params: params)
+    public static func log(name: String, params: [String: Any]?) {
+        GalaxyTrackLog.shared.logEvent(name: name, params: params)
     }
     
     
     /// Send Encodable object to server
     /// - Parameter value: object
     /// - Throws: error encode
-    public static func log<T: Encodable>(value: T) throws  {
+    public static func log<T: Encodable>(name: String, value: T) throws  {
         let encoder = JSONEncoder()
         let data = try encoder.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        log(params: json)
+        log(name: name, params: json)
     }
 }
 

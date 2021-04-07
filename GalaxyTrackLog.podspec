@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name          = "GalaxyTrackLog"
-  s.version       = "0.0.8"
+  s.version       = "0.0.9"
   s.summary       = "iOS SDK tracking event Galaxy"
   s.description   = "Using for iOS tracking event Galaxy"
   s.homepage      = "https://github.com/dung00275/"
@@ -12,4 +12,5 @@ Pod::Spec.new do |s|
   s.platform      = :ios, "11.0"
   s.source_files        = "GalaxyTrackLog/*.{h,m,swift}"
   s.public_header_files = "GalaxyTrackLog/*.h"
+  s.dependency 'Firebase/Analytics'
 end
