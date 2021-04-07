@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.source_files        = "GalaxyTrackLog/*.{h,m,swift}"
   s.public_header_files = "GalaxyTrackLog/*.h"
   s.static_framework = true
-  s.dependency 'Firebase/Analytics''
+  s.dependency 'Firebase/Analytics'
 end
