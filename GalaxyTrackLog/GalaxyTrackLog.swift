@@ -52,9 +52,9 @@ struct AppConfigure: Codable {
         params["DeviceManufacturer"] = "APPLE"
         params["DeviceModel"] = deviceModel
         params["DeviceType"] = deviceType
-        params["VersionApp"] = appVersion
+        params["VersionApp"] = shortVersion
         params["PackageName"] = appBundle
-        params["BuildVersion"] = shortVersion
+        params["BuildVersion"] = appVersion
         params["VersionOS"] = "\(iOSSDK) \(versionCode)"
         params["DeviceDensity"] = "\(scale)"
         params["Language"] = language
