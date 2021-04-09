@@ -86,7 +86,7 @@ extension Dictionary {
 }
 
 extension Date {
-    func string(format: String, identifier: String = "en_US") -> String {
+    func string(format: String, identifier: String = "en_US_POSIX") -> String {
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: identifier)
         dateFormater.dateFormat = format
@@ -151,7 +151,7 @@ public final class GalaxyTrackLog: NSObject {
                 fatalError("Check sessionID, firebaseID !!!")
             }
             var params = self.app.params
-            params["EventTime"] = Date().string(format: "yyyy-MM-dd**hh:mm:ss.sTZD").replacingOccurrences(of: "**", with: "T")
+            params["EventTime"] = Date().string(format: "yyyy-MM-dd'T'HH:mm:ssZZZZZ")
             params["SessionID"] = sessionID
             params["FID"] = firebaseID
             params["UserID"] = self.userID
