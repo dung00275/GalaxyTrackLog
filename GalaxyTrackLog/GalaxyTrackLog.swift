@@ -151,7 +151,7 @@ public final class GalaxyTrackLog: NSObject {
                 fatalError("Check sessionID, firebaseID !!!")
             }
             var params = self.app.params
-            params["EventTime"] = Date().string(format: "yyyy-MM-dd'T'HH:mm:ssZZZZZ")
+            params["EventTime"] = Date().string(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             params["SessionID"] = sessionID
             params["FID"] = firebaseID
             params["UserID"] = self.userID
