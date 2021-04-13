@@ -197,7 +197,7 @@ public final class GalaxyTrackLog: NSObject {
     
     /// Path api for up log
     public var urlUpload: String?
-    public var sessionID: String?
+    public var sessionID: Double?
     public var userID: String = "anonymous" {
         didSet {
             Analytics.setUserID(userID)
